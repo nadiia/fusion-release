@@ -15,6 +15,14 @@ steps:
   #       run: fusion-release
   #   agents:
   #     queue: workers
+  - name: "ONLY fusion react - flowtype"
+    command: "./node_modules/.bin/lerna exec --scope fusion-react -- [ -f ./node_modules/.bin/flow ] && yarn flow || true"
+    timeout_in_minutes: 60
+    agents:
+      queue: workers
+    plugins:
+      "docker-compose#v1.5.2":
+        run: "fusion-release"
   - name: "all packages - flowtype"
     command: "./node_modules/.bin/lerna exec -- [ -f ./node_modules/.bin/flow ] && yarn flow || true"
     timeout_in_minutes: 60
